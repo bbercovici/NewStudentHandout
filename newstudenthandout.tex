@@ -1,0 +1,93 @@
+\documentclass{report}
+\input{preamble.tex}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\renewcommand\thesection{\arabic{section}}
+
+\begin{document}
+The present document aims at giving you all the info you need in order to get started here at CU. It covers a number an items which you should find useful during your PhD career here. All the examples in this document are guaranteed to work on a Unix platform (MacOS, Linux).
+
+\section{Git and Github}
+\subsection{Brief description}
+\href{https://en.wikipedia.org/wiki/Git_(software)}{Git} is "a version control system that is used for system development". Not only can it keep track of all the changes imparted to code undergoing development by a single user, but its functionalities are extremely handy when several developers interact with the same piece of code concurrently.\\
+\href{https://github.com/}{Github} is a website that offers a server architecture that you can synchronize with your local copy of the code. This remote code storage location is called " remote repository" in Git jargon. Repositories can be
+\begin{itemize}
+\item public: everybody can see the code, contribute or pull (i.e retrieve the most recent version of the code) from the repository
+\item private: the repository's owner is by default the only one able to perform any of the previously listed actions, unless authorized contributors are added to the repository access list.
+\end{itemize} 
+Github permits one to create an infinite number of public repositories for free. Private repositories are typically not free, but you can upgrade your Github account to a Premium account (which allows you to create private repositories) thanks to your CU Boulder student status.\\ Note that alternatives to Github such as \href{https://bitbucket.org}{Bitbucket}  do exist.
+A summary of Git workflow is provided on Figure \ref{fig:git_workflow} along with the main Git commands.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{git_workflow}
+\caption{A summary of Git workflow taken from \href{http://www.slideshare.net/VinothKumarKannan/svn-vs-mercurial-vs-github}{here} }
+\label{fig:git_workflow}
+\end{figure}
+Figure \ref{fig:git_workflow} encompasses a good chunk of what you need to know about Git. The following sections will show you two important examples:
+\begin{itemize}
+\item [1.] How to create a local repository on your computer, a remote repository on Github and synchronize the two. In particular, the \textit{add}, \textit{commit} and \textit{push} commands will be exemplified. 
+\item [2.] How to contribute to code in a collaborative environment.
+\end{itemize}
+\subsection{How to set up a local/remote repository}
+
+\subsection{Create the local repository}
+Once ready to get started, open a terminal window into the folder where you want to create your repository. In this example, the repository will be in a folder named \textit{NewStudentHandout} located in the \textit{Documents} folder of a Unix system. On a Mac, the terminal command \textit{pwd} would return 
+\textit{/Users/my\_username/Documents/NewStudentHandout} when executed from \textit{NewStudentHandout}. Once you have made sure that your terminal is in the right folder, type
+\begin{lstlisting}[language=bash, caption=Creation of the local repository]
+git init
+\end{lstlisting}
+If everything goes well, the following should appear on the terminal window:
+\begin{lstlisting}[language=bash, caption=Successful git init message ]
+Initialized empty Git repository in /Users/bbercovici/Documents/NewStudentHandout/.git/
+\end{lstlisting}
+
+This command initiates your local git repository by creating the hidden directory \textit{./git} and populates it with a number of configuration files. These files are the backbone of your local repository, so make sure not to alter them. 
+\subsection{Create an account on Github}
+The title of this section is quite self-explanatory.
+\subsection{Create the remote repository on Github}
+Log on to Github and click on "New repository" in the drop-down list next to your profile picture as show on Figure \ref{fig:new_repo}.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{new_repo}
+\caption{New repository}
+\label{fig:new_repo}
+\end{figure}
+
+The following window (shown on Figure \ref{fig:new_repo_settings}) allows you to choose several important settings for your remote repository.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{new_repo_settings}
+\label{fig:new_repo_settings}
+\end{figure}
+
+\begin{itemize}
+\item Choose whether the repository will be made public or private (the latter being only available if you have upgraded to a premium account).
+\item Initialize the repository with a README.md file. \textcolor{red}{Leave this box unchecked if your local repository is already created, as this file can be added later on manually without risking conflicts} 
+\item Add a .gitignore file. This file lists all the file extensions that must be ignored by Git. Especially handy if there are specific file extensions that you never want to see included in a commit.
+\item Add a license file.
+\end{itemize}
+When you are ready, simply click on Create Repository and proceed to the next step.
+\subsection{Connect the local repository to the remote repository}
+You should now be seeing the same page as on Figure \ref{fig:setup_options}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{setup_options}
+\caption{Final setup options}
+\label{fig:setup_options}
+\end{figure}
+The third option is what we want to do, since we already have created a remote repository. Simply copy and paste the two lines under "...push an existing repository from the command line" into your terminal. 
+\begin{lstlisting}[language=bash, caption=Push the local repository to the remote ]
+git remote add origin https://github.com/bbercovici/NewStudentHandout.git
+git push -u origin master
+\end{lstlisting}
+
+\section{Latex}
+\section{Asymptote}
+\end{document}
