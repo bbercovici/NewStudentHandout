@@ -8,6 +8,11 @@
     urlcolor=blue,
 }
 
+\makeatletter
+\newcommand*{\toccontents}{\@starttoc{toc}}
+\makeatother
+
+
 \renewcommand\thesection{\arabic{section}}
 
 \begin{document}
@@ -16,7 +21,8 @@
 Tips and Tricks
 \end{center}
 \end{huge}
-The present document covers a number an items which you should find useful during your PhD career here. All the examples in this document are guaranteed to work on a Unix platform (MacOS, Linux).
+The present document covers a number an items which you should find useful during your PhD career here. All the examples in this document are guaranteed to work on a Unix platform (MacOS, Linux), and are also adaptable to Windows systems.\\
+\toccontents
 
 \section{Git and Github}
 \subsection{Brief description}
@@ -112,6 +118,7 @@ git push -u origin master
 \end{lstlisting}
 
 We are now all set! We can keep working in our local directory, add files containing new content to the index using \textit{git add}, commit the changes to the local repository using \textit{git commit}, and finally pushing the changes to the remote using \textit{git push origin master} (note that the -u option was not used here). Now is also the time to create a .gitignore file and a README.md file.
+\subsection{Contribute to code in a collaborative environment}
 \section{\LaTeX\ }
 
 
@@ -165,7 +172,7 @@ This software works on Windows, MacOS and Linux. The version you need can be fou
 
 \subsection*{Editing and compiling this tutorial}
 
-First of all, download the following \href{https://drive.google.com/file/d/0Bzf79yzZcPJJSnJKOFdrLVhtSG8/view?usp=sharing}{archive} and extract it into a folder of your choice. 
+First of all, download the following \href{https://drive.google.com/file/d/0Bzf79yzZcPJJNVhKNFBxWGs1aEE/view?usp=sharing}{archive} and extract it into a folder of your choice.
 
 The \textit{preamble.tex} file lists all the packages that are needed in order to compile some commands that would otherwise be unknown to the Latex compiler. I have been using Latex and constantly updating this list of packages for nearly 4 years, so it should be comprehensive enough now\footnote{The \textit{float} package that you will see listed in the preamble is one of these packages that come in handy. Without it, including figures in your document can lead to layout disasters... }.
 
@@ -183,7 +190,7 @@ Opening the tutorial.tex file should get you the same view as on Figure \ref{fig
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.38]{opened_document}
-\caption{Texmaker displaying the \textit{tutorial.tex} file. Note that the structure of the document automatically appears on the left side of the window}
+\caption{Texmaker displaying the \textit{tutorial.tex} file. Note that the document structure automatically appears on the left side of the window}
 \label{fig:opened_document}
 \end{figure}
 If you take a look at the very top of the document, you will recognize the \textit{preamble.tex} file that I mentioned before. The \textit{$\setminus$input\{preamble.tex\}} command will - as the name suggests - have \textit{tutorial.tex} including the content of \textit{preamble.tex}. It is equivalent to copying the content of \textit{preamble.tex} and pasting it into \textit{tutorial.tex}. Because the latter would be rather messy, listing all the packages you will use in an external file and using the input command is a much better practice.\\
@@ -192,9 +199,44 @@ Note that everything that begins with a $\setminus$\footnote{The key that corres
 Clicking on the \textit{Quick Build} button will run the compiler, that will process the .tex file and generate a \textit{tutorial.pdf} document in the same folder as the \textit{tutorial.tex} file
 
 \subsection*{Maths and \LaTeX }
-There are thousands of tutorials available on the web addressing this topic. The greatest understatement of the day would be to say that \LaTeX\ is really well suited to maths typesetting. I have uploaded an old homework of mine to the D2L folder that contains lots of useful stuff you need to know to use Latex in this context. I strongly encourage you to open the document, compile it, see the pdf output, and then take a closer look at the .tex file to understand how mathematical expressions are formatted.
+There are thousands of tutorials available on the web addressing this topic. The greatest understatement of the day would be to say that \LaTeX\ is really well suited to maths typesetting. Several examples based off former homeworks of mine are available \href{https://drive.google.com/file/d/0Bzf79yzZcPJJSnJKOFdrLVhtSG8/view?usp=sharing}{there}.
+
+I strongly encourage you to open the document, compile it, see the pdf output, and then take a closer look at the .tex file to understand how mathematical expressions are formatted.
 \subsection*{Resources}
-Dr. Schaub has listed a number of references on \href{http://hanspeterschaub.info/AVS-LaTeX.html}{\textcolor{blue}{his website}} which I encourage you to use. There is in particular a Latex cheat sheet that could come in handy.  
+Dr. Schaub has listed a number of references on \href{http://hanspeterschaub.info/AVS-LaTeX.html}{his website} which I encourage you to use. There is in particular a Latex cheat sheet that could come in handy.  
 
 \section{Asymptote}
+\subsection{Brief description}
+\href{http://asymptote.sourceforge.net/}{Asymptote} is "a powerful descriptive vector graphics language that provides a natural coordinate-based framework for technical drawing." In other words, it is a compiled language that generates .eps or .pdf representing any 2D or 3D scene parametrized mathematically. Its hybrid syntax borrows from Python, C and Latex, which can be a bit bewildering at first. Raw asymptote code is customarily stored in the form of a .asy file, which can be edited using the text editor of your choice.
+The installation procedure depends on the platform you are using:
+\begin{itemize}
+\item MacOS X: Asymptote is already shipped with MacTex, so there is nothing to do besides retrieving the Latex distribution
+\item Windows: Download the latest executable file from \href{https://sourceforge.net/projects/asymptote/files/}{the official Asymptote page}. Make sure to have a running Latex distribution before attempting to run Asymptote!
+\item Linux: Similarly to MacOS X, Asymptote is shipped with the TexLive distribution.
+\end{itemize} 
+Asymptote files can be compiled directly from a Unix terminal. Simply type \textit{asy myfile.asy} to compile the file and generate the output which by default will be named \textit{myfile.pdf} or \textit{myfile.eps}. The output format can be set using the \textit{settings.outformat="pdf";} instruction in the asy file. On Windows, compilation can be taken care of by TexMaker.
+\subsection{Examples}
+Two Asymptote output files are presented below, to demonstrate the 2D and 3D capabilities of the language. Figure \ref{fig:flyby} represents a planetary flyby where the input angles are prescribed to their real value. The trajectory that is displayed is a conic (an hyperbola in this case) which corresponds to the true Keplerian orbit expected in this case.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{flyby.pdf}
+\caption{Planetary flyby (2D scene)}
+\label{fig:flyby}
+\end{figure}
+The example shown on Figure \ref{fig:ECI_to_body} is another illustration of Asymptote capabilities. Here, the body frame of a spacecraft is represented relative to an inertial frame. The spacecraft attitude is parametrized in terms of a set of 321 Euler angles (yaw, pitch, roll) that the user can edit. Recompiling the .asy file for a new attitude will generate the same scene with a different orientation, without requiring the user to edit manually the location of every single satellite feature.
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{ECI_to_body.pdf}
+\caption{Satellite body-frame to inertial frame (3D scene)}
+\label{fig:ECI_to_body}
+\end{figure}
+\subsection{More examples}
+The best compilation of examples I have found to date is probably \href{https://drive.google.com/file/d/0Bzf79yzZcPJJc0dWTHNZMkhqTGc/view?usp=sharing}{this one for 2D examples} and
+\href{https://drive.google.com/file/d/0Bzf79yzZcPJJYld2cnhqWXZNU28/view?usp=sharing}{ this one for 3D examples}. As the reader will soon notice, these resources are unfortunately not in English. This being said, they are quite self explanatory due to the ubiquitous use of English in the Asymptote language in addition to the (almost) comprehensive list of Asymptote routines they provide. English documentation files, quite comprehensive but maybe less exhaustive can also be found \href{http://asymptote.sourceforge.net/asymptote.pdf}{here} and another one \href{https://math.uchicago.edu/~cstaats/Charles_Staats_III/Notes_and_papers_files/asymptote_tutorial.pdf}{here}.
+
+
+
+
+
+
 \end{document}
