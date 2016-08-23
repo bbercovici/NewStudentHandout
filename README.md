@@ -1,0 +1,1 @@
+This repo stores the .tex files used to compile a list of tips and tricks for new ASEN PhD students at CU Boulder. The topics that are covered as of now include LaTeX, Git and GitHub and Asymptote.
