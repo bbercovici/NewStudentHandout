@@ -180,8 +180,66 @@ git mergetool
 \noindent
 For more information on how to use and setup a merge tool see \href{https://git-scm.com/docs/git-mergetool}{here}.
 
+\subsubsection{Example Branch Lifecycle}
 
-\subsubsection{Create an account on Github}
+\begin{itemize}
+\item{create a new branch and switch to it}
+
+\begin{lstlisting}[language=bash, caption= ]
+git checkout -b new_branch 
+\end{lstlisting}
+
+\item{push this new branch to the remote}
+
+\begin{lstlisting}[language=bash, caption= ]
+git push origin -u new_branch
+\end{lstlisting}
+
+\item{make changes} 
+
+\begin{lstlisting}[language=bash, caption= ]
+git add files 
+git commit -am "added files. made changes to other files" 
+\end{lstlisting}
+
+\item{push changes to remote}
+
+\begin{lstlisting}[language=bash, caption= ]
+git push origin new_branch
+\end{lstlisting}
+
+\item{rinse and repeat commits and pushes to new branch until feature is complete}
+\item{perform initial code inspection and \textbf{run unit tests}}
+\item{merge into master on local}
+
+\begin{lstlisting}[language=bash, caption= ]
+git checkout master
+git merge new_branch
+\end{lstlisting}
+
+\item{if there are any conflicts use the mergetool}
+
+\begin{lstlisting}[language=bash, caption= ]
+git mergetool
+\end{lstlisting}
+
+\item{\textbf{perform code review}}
+\item{then push local master with feature to remote}
+
+\begin{lstlisting}[language=bash, caption= ]
+git push origin master
+\end{lstlisting}
+
+\item{delete the new branch on your local and on the remote}
+
+\begin{lstlisting}[language=bash, caption= ]
+git branch -d branch_name
+git push origin --delete branch_name
+\end{lstlisting}
+
+\end{itemize}
+
+\subsection{Create an account on Github}
 The title of this section is quite self-explanatory. Make sure you remember your username/password as you will need them shortly!
 \subsubsection{Create the remote repository on Github}
 Log on to Github and click on "New repository" in the drop-down list next to your profile picture as show on Figure \ref{fig:new_repo}.
