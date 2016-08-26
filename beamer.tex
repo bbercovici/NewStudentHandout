@@ -1,1 +1,45 @@
 \section{Beamer}
+Beamer is described as "a LaTeX class to create powerful, flexible and nice-looking presentations and slides"\footnote{https://www.sharelatex.com/learn/Beamer}. 
+\subsection{Installation}
+There is nothing to install, as Beamer is just a LaTeX class (whose definition is already included in the LaTeX distribution of your choice). 
+\subsection{Usage}
+Since Beamer heavily builds upon LaTeX, there are very little new commands that you need to know. LaTeX maths commands work just as well in Beamer as they do within a report class. In order to turn your classic LaTeX report into a Beamer presentation, 
+simply replace
+\begin{lstlisting}
+\documentclass{report}
+\end{lstlisting}
+
+by
+\begin{lstlisting}
+\documentclass{beamer}
+\end{lstlisting}
+at the beginning of your LaTeX report.
+An alternative is also to add the following option to the \textit{documentclass} command, which will set the aspect ratio of the slides to $16\/9$
+
+\begin{lstlisting}
+\documentclass[aspectratio=169]{beamer}
+\end{lstlisting}
+
+The two other fundamental environments are \textit{frame} and \textit{block} (and its derivatives \textit{exampleblock} and \textit{alertblock}. The former allows you to create a frame by wrapping the frame content inside it. The latter are wrapping containers (blue, green and red respectively).\\ A difference with standard LaTeX classes such as \textit{report} is that the \textit{chapter} command will not work in Beamer.
+
+Finally, another useful command is \textit{pause}, which introduces a "pause" transition by splitting a frame into two slides.
+
+\begin{lstlisting}[caption = Frame and block example]
+\begin{frame}{my frame title (optional)}
+
+\begin{block}{Here is a block title! (recommended)}
+
+\end{block}
+
+\begin{alertblock}{Here is an alertblock title! (recommended)}
+\pause
+
+\end{alertblock}
+
+\begin{exampleblock}{Here is an exampleblock title! (recommended)}
+
+\end{exampleblock}
+
+\end{frame}
+\end{lstlisting}
+A more comprehensive example making use of all these commands can be found \href{https://drive.google.com/folderview?id=0Bzf79yzZcPJJUXh0ZmZOLU9PQ0E&usp=sharing}{here}.
