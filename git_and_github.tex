@@ -1,14 +1,25 @@
 
 \section{Git and Github}
+
 \subsection{Brief description}
+
 \href{https://en.wikipedia.org/wiki/Git_(software)}{Git} is "a version control system that is used for system development". Not only can it keep track of all the changes imparted to code undergoing development by a single user, but its functionalities are extremely handy when several developers interact with the same piece of code concurrently.\\
+
+\noindent
 \href{https://github.com/}{Github} is a website that offers a server architecture that you can synchronize with the local copy of the code. This remote code storage location is called " remote repository" in Git jargon. Repositories can be
+
 \begin{itemize}
 \item public: everybody can see the code, contribute or pull (i.e retrieve the most recent version of the code) from the repository
 \item private: the repository's owner is by default the only one able to perform any of the previously listed actions, unless authorized contributors are added to the repository access list.
 \end{itemize} 
-Github permits one to create an infinite number of public repositories for free. Private repositories are typically not free, but you can upgrade your Github account to a Premium account (which allows you to create private repositories) thanks to your CU Boulder student status.\\ Note that alternatives to Github such as \href{https://bitbucket.org}{Bitbucket}  do exist.
+
+Github permits one to create an infinite number of public repositories for free. Private repositories are typically not free, but you can upgrade your Github account to a Premium account (which allows you to create private repositories) thanks to your CU Boulder student status.
+
+Alternatively, git is installed on most campus servers, such as CCAR's \textit{projects/} folder. Remote repositories can be created on the server and accessed similarly to Github. This setup is ideal for projects that contain proprietary code or other sensitive information that should not be published online (even on gitbub's private servers).
+
+Note that alternatives to Github such as \href{https://bitbucket.org}{Bitbucket}  do exist.
 A summary of Git workflow is provided on Figure \ref{fig:git_workflow} along with the main Git commands.
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{git_workflow}
@@ -22,19 +33,26 @@ Figure \ref{fig:git_workflow} encompasses a good chunk of what you need to know 
 \end{itemize}
 \subsection{How to set up a local/remote repository}
 
-\subsubsection{Create the local repository}
+\subsubsection{Creating an Empty Local Repository}
+
 We begin by opening a terminal window into the folder where we want to create our repository. In this example, the repository will be in a folder named \textit{NewStudentHandout} located in the \textit{Documents} folder of a Unix system. On a Mac, the terminal command \textit{pwd} would return 
 \textit{/Users/my\_username/Documents/NewStudentHandout} when executed from \textit{NewStudentHandout}. Once we have made sure that the window terminal is in the right folder, let's type
+
 \begin{lstlisting}[language=bash, caption=Creation of the local repository]
 git init
 \end{lstlisting}
+
 If everything goes well, the following should appear on the terminal window:
+
 \begin{lstlisting}[language=bash, caption=Successful git init message ]
 Initialized empty Git repository in /Users/bbercovici/Documents/NewStudentHandout/.git/
 \end{lstlisting}
+
 This command initiates the local git repository by creating the hidden directory \textit{./git} and populates it with a number of configuration files. These files are the backbone of your local repository, so make sure not to alter them.\\
 As noted by Git, our local repository is empty. Note that the working directory content is unrelated to the local repository content as those are two separate entities as shown on Figure \ref{fig:git_workflow}. We thus have to use \textit{add} to add files to the index cache, and \textit{commit} this index to have those files added to our local repository.\\
+
 Let us start with the \textit{add} command. It can be used in two different ways, as shown below (assuming that \textit{myfile.txt} does exist in the working directory):
+
 \begin{lstlisting}[language=bash, caption=Add files to the cache ]
 git add myfile.txt
 # the index cache only contains myfile.txt
@@ -46,6 +64,122 @@ Another useful command is \textit{status}, which highlights files depending on w
 git commit -m "first commit: myfile.txt added to the local repo"
 \end{lstlisting}
 The "-m" options allows us to append a message to the commit. After the content of the local repository is pushed to remote repository, the other developers will be able to read the message and quickly understand what this commit was about.
+
+
+\subsubsection{Cloning an Existing Repository}
+
+More often than not you will be cloning someone else's repository as opposed to creating one from scratch. The process is straightforward. In the terminal, navigate to where you would like to store your local copy of the repository - Desktop in this example
+
+\begin{lstlisting}[language=bash, caption= ]
+cd Users/username/Desktop
+\end{lstlisting}
+
+\noindent
+Now use the \textit{git clone} command to clone the existing repository located on some server
+
+\begin{lstlisting}[language=bash, caption= ]
+git clone /some_server/repo_name.git
+\end{lstlisting}
+
+\noindent
+or if cloning from Github,
+
+\begin{lstlisting}[language=bash, caption= ]
+git clone https://github.com/AuthorName/RepositoryName
+\end{lstlisting}
+
+\subsection{Creating Branches and Interacting with the Remote}
+
+You now have a local repository from which you can create or switch branches and make any additions or modifications. To create a new branch, type
+
+\begin{lstlisting}[language=bash, caption= ]
+git branch branch_name
+\end{lstlisting}
+
+\noindent
+If you type
+
+\begin{lstlisting}[language=bash, caption= ]
+git branch -a
+\end{lstlisting}
+
+\noindent
+you will see a list of branches that are on your local repository and on your image of the remote. To switch to your new branch type
+
+\begin{lstlisting}[language=bash, caption= ]
+git checkout branch_name
+\end{lstlisting}
+
+\noindent
+Alternatively you can combine the branch and checkout commands so that you automatically switch to the new branch,
+
+\begin{lstlisting}[language=bash, caption= ]
+git checkout -b branch_name
+\end{lstlisting}
+
+\noindent
+You can always check to see what branch you are on by using the \textit{git branch -a} command. Now that you have created a new local branch you will likely want to push it to the remote, either for collaboration, code sharing or simply as a back-up. To do this type
+
+\begin{lstlisting}[language=bash, caption= ]
+git push origin -u branch_name
+\end{lstlisting}
+
+\noindent
+It is important to note that your image of the remote repository \textbf{does not automatically update as other people make changes}. To refresh your image of the remote type
+
+\begin{lstlisting}[language=bash, caption= ]
+git fetch
+\end{lstlisting}
+
+\noindent
+To update your local branches with changes from the remote type
+
+\begin{lstlisting}[language=bash, caption= ]
+git pull
+\end{lstlisting}
+
+\noindent
+To push changes you have made to the remote type
+
+\begin{lstlisting}[language=bash, caption= ]
+git push origin branch_name
+\end{lstlisting}
+
+\noindent
+Note that you must commit all changes prior to pushing.
+
+\subsection{Branch Management and Collaboration}
+
+Git is great version control system for projects with multiple developers. The branch and merge features allow different features to be developed simultaneously and efficiently, minimizing the amount of overhead associated with folding in contributions from multiple sources. \\
+
+Typically it is a good idea to designate a single developer to be the gatekeeper to the repository. This person is responsible for both branch creation and branch merging. This ensures that at least one person has a good view of where the development is headed and a good grasp on who is doing what. In a professional setting this person might also be responsible for reviewing code and ensuring that all of the developers are following the same standards. 
+
+\subsubsection{The Master Branch}
+
+The default branch created by git is called \textit{master}. It is good practice to never develop on this branch. Instead, create separate branches for different features or bug fixes that need to be addressed, and merge them into master only after proper unit testing and code review has taken place. \textbf{This ensures that you have the last working copy at all times.}
+
+\subsubsection{Branching}
+
+Branching is a convenient way of organizing development and divvying up tasks among developers. It is wise to split branches up such that the chance of having two developers modifying the same lines of code are minimized, allowing for merges without conflicts. 
+
+\subsubsection{Merging}
+
+Often times conflicts will arise when merging. Here it is important that the gatekeeper has a good understanding of all of the changes that have been made so that they can resolve any issues. Merging can become quite tricky after large overhauls or modifications. To merge a branch into your current branch type
+
+\begin{lstlisting}[language=bash, caption= ]
+git merge other_branch
+\end{lstlisting}
+
+\noindent
+If conflicts arise you may need to use a merge tool
+
+\begin{lstlisting}[language=bash, caption= ]
+git mergetool
+\end{lstlisting}
+
+\noindent
+For more information on how to use and setup a merge tool see \href{https://git-scm.com/docs/git-mergetool}{here}.
+
 
 \subsubsection{Create an account on Github}
 The title of this section is quite self-explanatory. Make sure you remember your username/password as you will need them shortly!
@@ -93,6 +227,10 @@ git push -u origin master
 \end{lstlisting}
 
 We are now all set! We can keep working in our local directory, add files containing new content to the index using \textit{git add}, commit the changes to the local repository using \textit{git commit}, and finally pushing the changes to the remote using \textit{git push origin master} (note that the -u option was not used here). Now is also the time to create a .gitignore file and a README.md file.
-\subsection{Contribute to code in a collaborative environment}
 
-Test
+\subsection{Links to Examples}
+
+\begin{itemize}
+\item Link to an online \href{https://try.github.io/levels/1/challenges/1}{tuturial}
+\item Link to the \href{https://git-scm.com/documentation}{official git manual}
+\end{itemize}
