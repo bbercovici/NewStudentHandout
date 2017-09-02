@@ -34,9 +34,9 @@ download the MiKTeX 2.9.5870 Net 32-bits executable
 \item[3.] When asked whether the executable should download the Basic or Complete MiKTeX distribution, choose Complete
 \item[4.] Choose the folder where the installation files will be downloaded
 \item[5.] Pick a download source geographically close from CU in the server list that should pop up
-\item[6.] Start the download...
+\item[6.] Start the download ...
 \end{itemize}
-...which might take a while...
+... which might take a while ...
 \begin{itemize}
 \item[7.] Once the download is over, go to the folder where you saved the \LaTeX\ distribution files. Look for setup-2.9.3959.exe (the only executable file in this folder) and run it.
 \item[8.] Once the installation process is over, you have a complete \LaTeX\ distribution installed on your PC and are almost good to go!
@@ -45,12 +45,36 @@ download the MiKTeX 2.9.5870 Net 32-bits executable
 \subsubsection{MacOS}
 \href{https://tug.org/mactex/mactex-download.html}{\textcolor{blue}{The MacTex distribution}} can be found there. Click on the link at the center of the page to get the whole distribution. The file weighs 2.5 GB so the download might take a while .
 
+
+\subsection{Using Latex without a Tex Editor}
+If you happen to be on Linux or MacOS, using Latex without a dedicated editor is perfectly doable. For instance, I only rely on Sublime Text, a terminal window and the built-in Preview pdf viewer to work on this document.
+
+On Mac, the Latex to pdf compiler should be \textit{pdflatex} if you have followed the instructions given in this tutorial. The compilation sequence of \textit{document.tex} from the terminal would simply look like
+
+\begin{lstlisting}[language = {}]
+pdflatex document.tex
+\end{lstlisting}
+Running this command would generate the compiled PDF \textit{document.pdf} in the current folder. If your document happens to have a bibtex bibliography, then you should do 
+
+
+\begin{lstlisting}[language = {}]
+pdflatex document.tex
+bibtex document.aux
+pdflatex document.tex
+pdflatex document.tex
+\end{lstlisting}
+
+It is useful to group all these commands in a simple \textit{script.sh} script so as run only the script and not the four commands separately. 
+
 \subsection{Getting the Tex Editor}
-From my own experience, I strongly recommend
+If you desire to use a Tex editor, I would recommend
 \href{http://www.xm1math.net/texmaker/}{\textcolor{blue}{Texmaker}}. The interface is neat and the autocomplete functionality (that predicts the rest of the command you are typing) rocks.\\
 This software works on Windows, MacOS and Linux. The version you need can be found on the download page. Installing Texmaker does not require any special instructions so you should be fine!
 
-\subsection{Editing and compiling this tutorial}
+\
+
+
+\subsection{Editing and compiling this tutorial in TexMaker}
 
 First of all, download the following \href{https://drive.google.com/file/d/0Bzf79yzZcPJJNVhKNFBxWGs1aEE/view?usp=sharing}{archive} and extract it into a folder of your choice.
 
@@ -76,7 +100,18 @@ Opening the tutorial.tex file should get you the same view as on Figure \ref{fig
 If you take a look at the very top of the document, you will recognize the \textit{preamble.tex} file that I mentioned before. The \textit{$\setminus$input\{preamble.tex\}} command will - as the name suggests - have \textit{tutorial.tex} including the content of \textit{preamble.tex}. It is equivalent to copying the content of \textit{preamble.tex} and pasting it into \textit{tutorial.tex}. Because the latter would be rather messy, listing all the packages you will use in an external file and using the input command is a much better practice.\\
 
 Note that everything that begins with a $\setminus$\footnote{The key that corresponds to this symbol is the one right above the Enter/Return Key.} is a \LaTeX\ command. This $\setminus$ tells the compiler that whatever follows this symbol has to be interpreted. Plain text is just considered as is. \\
-Clicking on the \textit{Quick Build} button will run the compiler, that will process the .tex file and generate a \textit{tutorial.pdf} document in the same folder as the \textit{tutorial.tex} file
+Clicking on the \textit{Quick Build} button will run the compiler, that will process the .tex file and generate a \textit{tutorial.pdf} document in the same folder as the \textit{tutorial.tex} file.
+
+\subsection{Editing and compiling this tutorial without TexMaker}
+Simply run 
+
+\begin{lstlisting}[language = {}]
+pdflatex newstudenthandout.tex
+bibtex newstudenthandout.aux
+pdflatex newstudenthandout.tex
+pdflatex newstudenthandout.tex
+\end{lstlisting}
+
 
 \subsection{Maths and \LaTeX }
 There are thousands of tutorials available on the web addressing this topic. The greatest understatement of the day would be to say that \LaTeX\ is really well suited to maths typesetting. Several examples based off former homeworks of mine are available \href{https://drive.google.com/file/d/0Bzf79yzZcPJJSnJKOFdrLVhtSG8/view?usp=sharing}{there}.

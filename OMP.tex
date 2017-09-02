@@ -1,0 +1,59 @@
+\section{OpenMP}
+
+\subsection{A quick overview}
+OpenMP (Open Multi-Processing) or OMP is an application programming interface (API) that supports multi-platform shared memory multiprocessing programming in a number of languages, including C++ and Fortran. OMP is the lowest-hanging fruit into the high-performance computing world due to its ease of use and performance.
+
+Multithreading proceeds by breaking down a computing task between a number of semi-independent computing agents, or \textit{threads}. OMP makes multithreading easy by "only" requiring the use of pre-processor directives.
+
+A typical basic use case (and nonetheless extremely useful) could take the following form:
+
+\begin{lstlisting}[language=C++]
+void test_1(int n, float *a, float *b){
+	#pragma omp parallel for
+ 	for (int i=1; i<n; i++)
+ 		b[i] = (a[i] + a[i-1]) / 2.0;
+}
+\end{lstlisting}
+
+In the code snippet above, the elements of array $b$ are set by computing the average of the elements of array $a$. This process could be deemed "embarassingly parallel", since the elements of $b$ are mutually independent. The preprocessor routine on line 3 is all it takes to multithread this computation. $N$ threads will be created and assigned a range of counter values that are overall spanning $1 \hdots n - 1$ (the original counter value interval). This way, each thread is responsible for operating over a subset of $b$'s elements. Each thread will share the variables $a$, $b$ and $n$ since these are defined prior to entering the OMP region. However, $i$ is private to each thread by default (each thread owns its own copy of the iteration counter, which makes good sense). Note that variables can be explicitely declared \textit{shared} or \textit{private}.
+
+Another useful OMP directive is the \textit{reduction} clause. It comes in handy when each thread is operating on a variable that needs to be summed or otherwise combined at the end of a multithreading region. The following snippet shows a simple use case:
+
+\begin{lstlisting}[language=C++]
+void test_2(int n, float *a){
+	float sum = 0;
+	#pragma omp parallel for reduction (+:sum)
+ 	for (i=1; i<n; i++)
+ 		sum = sum + a[i];
+}
+\end{lstlisting}
+
+OMP allows the definition of custom reduction clause, beyond the simple built-in reductions clauses that it supports by default (see \href{https://gist.github.com/eruffaldi/7180bdec4c8c9a11f019dd0ba9a2d68c}{this code snippet}).
+
+The apparent simplicity of OMP should not hide the fact that using it carelessly will lead to software crashes. These typically arise when elements are concurrently added and/or removed from a container by multiple threads. Note that in the code snippets above, the said containers retain a constant size, which prevents race conditions from occuring. Many more OMP directives that help dealing with race conditions exist, although these could be avoided by ensuring that multithreading only takes place over areas of the code where the containers are static.
+
+\subsection{Getting OMP}
+Linux users should have built-in OMP support from their system-provided compiler. However, MacOS comes in with a compiler that does not support OMP natively. Fortunately, there is a way around that requires rebuilding a compiler with OMP support from scratch. This procedure is explained \href{https://github.com/bbercovici/SBGAT/wiki/2)-Compile-and-install-SBGAT-dependencies#build-gcc-from-source-mac-users-only}{there}. You will have to install Homebrew if you don't have it already (see \href{https://github.com/bbercovici/SBGAT/wiki/2)-Compile-and-install-SBGAT-dependencies#homebrew-mac-users-only}{how}).
+
+\subsection{Test case}
+A test covering the use of \textit{omp parallel for} and \textit{omp parallel for reduction} with effective computing time comparisons is provided \href{https://github.com/bbercovici/openMP_demo}{there}. Running the text on my own system that enables a maximum number of threads $N = 4$ yields the following results:
+
+\begin{lstlisting}[language = {}]
+Average assignement times: 
+	 Without OMP: 0.00930415 s
+	 With OMP: 0.00606115 s
+	 Absolute difference: 0.003243 s in favor of OMP
+	 Relative difference: OMP is 34.8554 % faster
+Average summation times: 
+	 Without OMP: 0.00613509 s
+	 With OMP: 0.00355503 s
+	 Absolute difference: 0.00258006 s in favor of OMP
+	 Relative difference: OMP is 42.0542 % faster
+\end{lstlisting}
+
+OMP makes each task (array assignment and summation) respectively 35 and 42 percents faster than purely serial operation in average.
+
+\subsection{More to read about OMP}
+The official OMP user's guide can be found there \href{http://www.openmp.org/wp-content/uploads/OpenMP4.0.0.Examples.pdf}{there}, with many more examples and definitions.
+
+A guide syntethizing typical programming mistakes involving OMP (which I find quite informative) can be found \href{https://software.intel.com/en-us/articles/32-openmp-traps-for-c-developers}{here}.
